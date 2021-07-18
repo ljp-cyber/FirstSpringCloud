@@ -1,0 +1,61 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 8769
+  servlet:
+    session:
+      cookie: 
+        name: RESOURCE_SESSIONID
+    
+spring:
+  security:
+    user:
+      name: admin
+      password: 1234
+  application:
+    name: service-zuul
+  devtools:
+    restart:
+      enabled: true
+  main:
+    allow-bean-definition-overriding: true
+logging:
+  level: 
+    org:
+      springframework:
+        security: DEBUG
+    
+security:
+  oauth2:
+    #sso:
+      #login-path: /,/**/*.html
+    resource:
+      user-info-uri: http://localhost:8764/user
+      prefer-token-info: false
+      #jwt:
+        #key-value: springcloud123 #使用对称加密方式，默认算法为HS256
+    client:
+      access-token-uri: http://localhost:8764/oauth/token
+      user-authorization-uri: http://localhost:8764/oauth/authorize
+      client-id: service-zuul
+      client-secret: secret 
+      scope: read,write
+      pre-established-redirect-uri: "http://localhost:8769/login"
+      use-current-uri: false #此处特别重要一定要配置，否则不会生效，配置了自定义的回调地址就必须将默认的回调禁止，原因不做过多
+
+zuul:
+  #忽略框架默认的服务映射路径
+  ignoredServices: '*'
+  #不忽略框架与权限相关的头信息
+  ignoreSecurityHeaders: false
+  #不忽略任何头部信息，所有header都转发到下游的资源服务器
+  sensitiveHeaders:
+  #不匹配任何规则zuul默认代理注册到eureka的说有服务，规则为：/服务名（转成小写）/路径
+  routes:
+    api-a:    #可以随便写，在zuul上面唯一即可；
+      path: /service-a/**
+      serviceId: PROVIDER-A
+    WEB-A: #当这里的值=serviceId时，serviceId可以不写。
+      path: /web-a/**

@@ -1,0 +1,19 @@
+#spring:
+#  security:
+#    basic:
+#      enabled: true
+#    user:
+#      name: user
+#      password: password123
+#EurekaClientConfigBean EurekaClient对应的bean，里面有些默认属性可供参考
+server:
+  port: 8761
+eureka:
+  instance: # eureak实例定义
+    hostname: 127.0.0.1 # 定义Eureka实例所在的主机名称
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    #service-url:
+      #defaultZone: http://user:password123@localhost:8761/eureka
+      #defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka

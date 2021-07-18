@@ -1,0 +1,11 @@
+server:
+  port: 8763
+  
+spring:
+  application:
+    name: WEB-A # 注册到eureka server的服务名
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka

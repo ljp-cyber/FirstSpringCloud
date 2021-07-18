@@ -1,0 +1,23 @@
+server:
+  port: 8764
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8764/user
+      prefer-token-info: false
+spring:
+  application:
+    name: oauth # 注册到eureka server的服务名
+  devtools:
+    restart:
+      enabled: true
+logging:
+  level: 
+    org:
+      springframework:
+        security: DEBUG
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/ # eureka server的地址

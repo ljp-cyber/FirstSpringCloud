@@ -1,0 +1,155 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.ljp</groupId>
+  <artifactId>SpringCloud-Base</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>SpringCloud-Base</name>
+  <description>SrpingCloud的父项目，定义大量jar包版本</description>
+  
+  <properties>		
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>1.8</java.version>
+    <!-- spring boot2.1.4以上升级到3.1.2，elcipse不支持报未知错误，不影响项目使用 -->
+    <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+    <!-- POM是继承spring-boot-starter-parent的话，只需要下面的指定就行 -->
+    <!-- <start-class>com.ljp.EruekaStart</start-class> -->
+  </properties>
+  
+  <parent>
+  	<groupId>org.springframework.boot</groupId>
+  	<artifactId>spring-boot-starter-parent</artifactId>
+  	<version>2.2.5.RELEASE</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+  
+  <dependencyManagement>
+  	
+  	<dependencies>
+      <!-- spring-cloud依赖版本管理pom导入 -->
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>		
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>Hoxton.SR3</version>
+        <type>pom</type>			
+        <scope>import</scope>
+      </dependency>
+      
+  	</dependencies>
+    
+  </dependencyManagement>
+  
+  <dependencies>
+  
+	<dependency>
+  	 <groupId>org.springframework.boot</groupId>
+  	 <artifactId>spring-boot-starter-test</artifactId>
+  	 <scope>test</scope>
+  	   <!-- <exclusions>
+  	     <exclusion>
+  	       <groupId>org.junit.vintage</groupId>
+  	       <artifactId>junit-vintage-engine</artifactId>
+  	     </exclusion>
+  	   </exclusions> -->
+	</dependency>
+  
+    <dependency> 
+        <groupId>org.springframework.boot</groupId> 
+        <artifactId>spring-boot-devtools</artifactId> 
+        <optional>true</optional> 
+   </dependency>
+  
+  </dependencies>
+
+  <modules>
+  	<module>SpringCloud-Consummer</module>
+  	<module>SpringCloud-Erueka</module>
+  	<module>SpringCloud-Service</module>
+  	<module>SpringCloud-Zuul</module>
+  	<module>SpringCloud-Oauth</module>
+  </modules>
+  
+  <build>
+	<plugins>
+      <!-- 如果你的POM不是继承spring-boot-starter-parent的话，需要下面的指定 -->
+      <!-- <plugin>
+      	<groupId>org.springframework.boot</groupId>
+      	<artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin> -->
+      
+	</plugins>
+  </build>
+  
+  <!-- pom里的profiles可以通过mvn -P加profile id激活，或者在maven的setting里配置激活 -->
+  <!-- 这里是不可以设置默认激活父项目的profile的 -->
+  <profiles>
+    <profile>
+      <!-- 不同环境Profile的唯一id -->
+      <id>spring</id>
+      <activation>
+        <!-- 标记为默认 profile -->
+        <activeByDefault>true</activeByDefault>
+      </activation>
+    </profile>
+  </profiles>
+  
+  <!-- 默认配置了阿里云库，有些包可能没有 -->
+  <repositories>
+    <!-- 指定该项目的maven依赖远程仓库 -->
+	<repository>
+      <id>spring-snapshots</id>
+      <name>Spring Snapshots</name>
+      <url>https://repo.spring.io/libs-snapshot-local</url>
+      <snapshots>
+      	<enabled>true</enabled>
+      </snapshots>
+	</repository>
+
+	<repository>
+      <id>spring-milestones</id>
+      <name>Spring Milestones</name>
+      <url>https://repo.spring.io/libs-milestone-local</url>
+      <snapshots>
+      	<enabled>false</enabled>
+      </snapshots>
+	</repository>
+
+	<repository>
+      <id>spring-releases</id>
+      <name>Spring Releases</name>
+      <url>https://repo.spring.io/libs-release-local</url>
+      <snapshots>
+      	<enabled>false</enabled>
+      </snapshots>
+	</repository>
+
+    </repositories>
+    <!-- 指定该项目的maven插件远程仓库 -->
+    <pluginRepositories>
+
+	<pluginRepository>
+      <id>spring-snapshots</id>
+      <name>Spring Snapshots</name>
+      <url>https://repo.spring.io/libs-snapshot-local</url>
+      <snapshots>
+      	<enabled>true</enabled>
+      </snapshots>
+	</pluginRepository>
+
+	<pluginRepository>
+      <id>spring-milestones</id>
+      <name>Spring Milestones</name>
+      <url>https://repo.spring.io/libs-milestone-local</url>
+      <snapshots>
+      	<enabled>false</enabled>
+      </snapshots>
+	</pluginRepository>
+    
+  </pluginRepositories>
+  
+</project>
